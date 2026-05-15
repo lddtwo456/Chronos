@@ -1,9 +1,11 @@
 const midiParser = require('midi-parser-js');
 const fs = require('fs');
-const { webUtils } = require('electron');
 
 function parseFile(filePath) {
-    console.log('gingle gong');
+    fs.readFile(filePath, 'base64', function (err, data) {
+        var midiArray = midiParser.parse(data);
+        console.log(midiArray.track[1]);
+    });
 }
 
 module.exports = { parseFile };

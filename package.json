@@ -20,9 +20,7 @@
   },
   "devDependencies": {
     "electron": "^42.2.0",
+    "midi-parser-js": "^4.0.4",
     "vexflow": "^5.0.0"
-  },
-  "dependencies": {
-    "midi-parser-js": "^4.0.4"
   }
 }
