@@ -25,6 +25,5 @@ app.on('window-all-closed', () => {
 });
 
 ipcMain.handle('parse-file', async (e, fileName) => {
-    const { Music } = await import('../shared/music.mjs');
-    return "fart spray";
+    return parseFile(fileName);
 });
