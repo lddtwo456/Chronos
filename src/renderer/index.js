@@ -1,7 +1,5 @@
 import { renderNotes } from './vexflow/noteRenderer.js';
-import { Music, setFileParser } from '../shared/music.mjs';
-
-setFileParser((fileName) => window.api.parseFile(fileName));
+import { Music } from '../shared/music.mjs';
 
 const app = document.getElementById('app');
 

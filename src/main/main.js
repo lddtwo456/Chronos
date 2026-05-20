@@ -25,5 +25,5 @@ app.on('window-all-closed', () => {
 });
 
 ipcMain.handle('parse-file', async (e, fileName) => {
-    return parseFile(fileName);
+    return await parseFile(fileName);
 });

@@ -1,17 +1,14 @@
 const midiParser = require('midi-parser-js');
-const fs = require('fs');
+const fs = require('fs').promises;
 
-function parseFile(filePath) {
-    return new Promise((resolve, reject) => {
-        fs.readFile(filePath, (err, data) => {
-            if (err) return reject(err);
-            const midiArray = midiParser.parse(data);
-            resolve({
-                microsecondsPerBeat: findMicrosecondsPerBeat(midiArray),
-                timestamps: getTimeStamps(midiArray.track[1])
-            })
-        });
-    });
+async function parseFile(filePath) {
+    const data = await fs.readFile(filePath);
+    const midiArray = midiParser.parse(data);
+
+    return {
+        microsecondsPerBeat: findMicrosecondsPerBeat(midiArray),
+        timestamps: getTimeStamps(midiArray.track[1]),
+    };
 }
 
 function findMicrosecondsPerBeat(midiArray) {
