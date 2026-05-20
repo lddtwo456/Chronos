@@ -14,6 +14,8 @@ class Music {
 
         this.fileName = fileName;
         console.log('Parsing file:', fileName);
-        parseFileFn(this.fileName);
+        this.data = parseFileFn(this.fileName);
+
+        console.log(this.data.microsecondsPerBeat);
     }
 }
