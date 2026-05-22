@@ -1,15 +1,32 @@
-import { Renderer, Stave, Clef } from "../../../node_modules/vexflow/build/esm/entry/vexflow.js";
+import { Factory } from "../../../node_modules/vexflow/build/esm/entry/vexflow.js";
 
 // Given div to render to and object that contains note data, render notes to div
 export function renderNotes(div, notes) {
-    const renderer = new Renderer(div, Renderer.Backends.SVG);
+    const vf = new Factory({ renderer: { elementId: div.id, width: 500, height: 500 } });
+    const stave = vf.Stave({
+        x: 10,
+        y: 40,
+        width: 300,
+        options: {
+            spacing_between_lines_px: 20,
+        }
+    });
 
-    renderer.resize(500, 500);
-    const ctx = renderer.getContext();
-    ctx.setFont('Arial', 10);
+    stave.setConfigForLines([
+        { visible: false },
+        { visible: false },
+        { visible: true },
+        { visible: false },
+        { visible: false },
+    ]);
 
-    const stave = new Stave(10, 40, 400);
-    stave.setNumLines(1);
-    stave.addClef('percussion');
-    stave.setContext(ctx).draw();
+    const system = vf.System();
+    system
+        .addStave({
+            voices: []
+        })
+        .addClef('percussion')
+        .addTimeSignature('4/4');
+        
+    vf.draw();
 }

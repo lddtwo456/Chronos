@@ -6,13 +6,12 @@ async function parseFile(filePath) {
     const midiArray = midiParser.parse(data);
 
     const microsecondsPerBeat = findMicrosecondsPerBeat(midiArray);
-    const timestamps = getTimeStamps(midiArray.track[1], midiArray.timeDivision, microsecondsPerBeat);
-    console.log(midiArray);
+    const beatStamps = getBeatStamps(midiArray.track[1], midiArray.timeDivision);
 
     return {
         microsecondsPerBeat: microsecondsPerBeat,
-        timestamps: timestamps,
-        durations: getDurations(timestamps),
+        beatStamps: beatStamps,
+        noteDistances: getDurations(beatStamps),
     };
 }
 
@@ -28,7 +27,7 @@ function findMicrosecondsPerBeat(midiArray) {
     return 500000;
 }
 
-function getTimeStamps(midiTrack, ticksPerBeat, microsecondsPerBeat) {
+function getBeatStamps(midiTrack, ticksPerBeat) {
     let dt = 0;
     let note = null; // Note to "listen" for
     let stamps = [];
@@ -42,7 +41,7 @@ function getTimeStamps(midiTrack, ticksPerBeat, microsecondsPerBeat) {
             }
 
             if (event.data[0] === note) {
-                stamps.push(dt/ticksPerBeat*microsecondsPerBeat/1000000);
+                stamps.push(dt/ticksPerBeat);
             }
         }
     }

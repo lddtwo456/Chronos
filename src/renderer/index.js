@@ -15,7 +15,7 @@ app.addEventListener('drop', async (e) => {
     const files = e.dataTransfer.files;    
     const fileName = await window.api.getFileName(files[0]);
     const music = await Music.fromMidiFile(fileName);
-    console.log(music.data);
+    console.log(music.defaultBPM, music.beatStamps, music.beatDistances);
 });
 
 const score = document.getElementById('score');

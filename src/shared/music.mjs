@@ -1,13 +1,14 @@
 export { Music };
 
 class Music {
-    constructor(fileName, data) {
-        this.fileName = fileName;
-        this.data = data;
+    constructor(defaultBPM, beatStamps, noteDistances) {
+        this.defaultBPM = defaultBPM;
+        this.beatStamps = beatStamps;
+        this.beatDistances = noteDistances;
     }
 
     static async fromMidiFile(fileName) {
         const data = await window.api.parseFile(fileName);
-        return new Music(fileName, data);
+        return new Music(60000000/data.microsecondsPerBeat, data.beatStamps, data.noteDistances);
     }
 }
