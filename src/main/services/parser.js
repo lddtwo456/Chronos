@@ -5,9 +5,14 @@ async function parseFile(filePath) {
     const data = await fs.readFile(filePath);
     const midiArray = midiParser.parse(data);
 
+    const microsecondsPerBeat = findMicrosecondsPerBeat(midiArray);
+    const timestamps = getTimeStamps(midiArray.track[1], midiArray.timeDivision, microsecondsPerBeat);
+    console.log(midiArray);
+
     return {
-        microsecondsPerBeat: findMicrosecondsPerBeat(midiArray),
-        timestamps: getTimeStamps(midiArray.track[1]),
+        microsecondsPerBeat: microsecondsPerBeat,
+        timestamps: timestamps,
+        durations: getDurations(timestamps),
     };
 }
 
@@ -23,19 +28,36 @@ function findMicrosecondsPerBeat(midiArray) {
     return 500000;
 }
 
-function getTimeStamps(midiTrack) {
+function getTimeStamps(midiTrack, ticksPerBeat, microsecondsPerBeat) {
     let dt = 0;
+    let note = null; // Note to "listen" for
+    let stamps = [];
 
     for (event of midiTrack.event) {
         dt += event.deltaTime;
-        console.log(dt);
+        
+        if (event.type === 9) {
+            if (note === null) {
+                note = event.data[0];
+            }
+
+            if (event.data[0] === note) {
+                stamps.push(dt/ticksPerBeat*microsecondsPerBeat/1000000);
+            }
+        }
     }
 
-    return 0;
+    return stamps;
 }
 
 function getDurations(timestamps) {
+    let durations = [];
 
+    for (let i = 1; i < timestamps.length; i++) {
+        durations.push(timestamps[i] - timestamps[i-1]);
+    }
+
+    return durations;
 }
 
 module.exports = { parseFile };
