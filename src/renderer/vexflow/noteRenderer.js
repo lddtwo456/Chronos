@@ -3,9 +3,10 @@ import { Factory } from "../../../node_modules/vexflow/build/esm/entry/vexflow.j
 // Given div to render to and object that contains note data, render notes to div
 export function renderNotes(div, notes) {
     const vf = new Factory({ renderer: { elementId: div.id, width: 500, height: 500 } });
+    const system = vf.System({ width: 300 });
     const stave = vf.Stave({
-        x: 10,
-        y: 40,
+        x: 0,
+        y: 0,
         width: 300,
         options: {
             spacing_between_lines_px: 20,
@@ -20,13 +21,18 @@ export function renderNotes(div, notes) {
         { visible: false },
     ]);
 
-    const system = vf.System();
     system
         .addStave({
-            voices: []
+            stave: stave,
+            voices: [vf.Voice().addTickables([
+                vf.StaveNote({ keys: ['b/4'], duration: 'q' }),
+                vf.StaveNote({ keys: ['b/4'], duration: 'q' }),
+                vf.StaveNote({ keys: ['b/4'], duration: 'qr' }),
+                vf.StaveNote({ keys: ['b/4'], duration: 'q' }),
+            ])],
         })
         .addClef('percussion')
         .addTimeSignature('4/4');
-        
+
     vf.draw();
 }
