@@ -4,14 +4,21 @@ import { Factory } from "../../../node_modules/vexflow/build/esm/entry/vexflow.j
 export function renderNotes(div, notes) {
     const vf = new Factory({ renderer: { elementId: div.id, width: 500, height: 500 } });
     const system = vf.System({ width: 300 });
-    const stave = vf.Stave({
-        x: 0,
-        y: 0,
-        width: 300,
-        options: {
-            spacing_between_lines_px: 20,
-        }
-    });
+
+    const staveNotes = [
+        vf.StaveNote({ keys: ['b/4'], duration: '8', stem_direction: 1 }),
+        vf.StaveNote({ keys: ['b/4'], duration: '8', stem_direction: 1 }),
+        vf.StaveNote({ keys: ['b/4'], duration: 'q', stem_direction: 1 }),
+        vf.StaveNote({ keys: ['b/4'], duration: 'qr', stem_direction: 1 }),
+        vf.StaveNote({ keys: ['b/4'], duration: 'q', stem_direction: 1}),
+    ];
+
+    const stave = system
+        .addStave({
+            voices: [vf.Voice().addTickables(staveNotes)],
+        })
+        .addClef('percussion')
+        .addTimeSignature('4/4');
 
     stave.setConfigForLines([
         { visible: false },
@@ -20,19 +27,6 @@ export function renderNotes(div, notes) {
         { visible: false },
         { visible: false },
     ]);
-
-    system
-        .addStave({
-            stave: stave,
-            voices: [vf.Voice().addTickables([
-                vf.StaveNote({ keys: ['b/4'], duration: 'q' }),
-                vf.StaveNote({ keys: ['b/4'], duration: 'q' }),
-                vf.StaveNote({ keys: ['b/4'], duration: 'qr' }),
-                vf.StaveNote({ keys: ['b/4'], duration: 'q' }),
-            ])],
-        })
-        .addClef('percussion')
-        .addTimeSignature('4/4');
 
     vf.draw();
 }
