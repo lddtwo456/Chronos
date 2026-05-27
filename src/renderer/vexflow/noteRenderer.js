@@ -4,33 +4,33 @@ export function renderNotes(div, notes) {
         VexFlow.setFonts('Bravura', 'Academico');
 
         const vf = new VexFlow.Factory({
-            renderer: { elementId: div.id, width: 500, height: 200},
+            renderer: { elementId: div.id, width: 800, height: 500},
         });
-        const system = vf.System({ width: 400 });
-        const note = [
+        const system1 = vf.System({ 
+            width: 200 
+        });
+        const system2 = vf.System({
+            x: 200,
+            width: 200
+        })
+        const b1 = vf.Voice().addTickables([
             vf.StaveNote({ keys: ['b/4'], duration: 'q' }),
             vf.StaveNote({ keys: ['b/4'], duration: '8' }),
             vf.StaveNote({ keys: ['b/4'], duration: '8' }),
             vf.StaveNote({ keys: ['b/4'], duration: 'qr' }),
             vf.StaveNote({ keys: ['b/4'], duration: 'q' }),
-            vf.BarNote(),
+        ]);
+        const b2 = vf.Voice().addTickables([
             vf.StaveNote({ keys: ['b/4'], duration: 'q' }),
             vf.StaveNote({ keys: ['b/4'], duration: '8' }),
             vf.StaveNote({ keys: ['b/4'], duration: '8' }),
             vf.StaveNote({ keys: ['b/4'], duration: 'qr' }),
             vf.StaveNote({ keys: ['b/4'], duration: 'q' }),
-        ]
-        const voice = vf.Voice({
-            num_beats: 4,
-            beat_value: 4,
-        });
-
-        voice.setStrict(false);
-        voice.addTickables(note);
-
-        system
+        ]);
+;
+        system1
             .addStave({ 
-                voices: [voice] 
+                voices: [b1] 
             })
             .addClef('percussion')
             .addTimeSignature('4/4')
@@ -41,8 +41,21 @@ export function renderNotes(div, notes) {
                 { visible: false },
                 { visible: false },
             ]);
-        vf.Beam({ notes: note.slice(1, 3) });
-        vf.Beam({ notes: note.slice(7, 9) });
+
+        system2
+            .addStave({
+                voices: [b2]
+            })
+            .setConfigForLines([
+                { visible: false },
+                { visible: false },
+                { visible: true },
+                { visible: false },
+                { visible: false },
+            ]);
+
+        console.log(system2.x);
+        
         vf.draw();
     });
 }
