@@ -19,7 +19,7 @@ export function renderNotes(div, notes) {
             score.tuplet(
                 score.notes('B4/8, B4/8, B4/8', { stem: 'up' }),
                 { num_notes: 3, notes_occupied: 1 })
-            .concat(score.notes('B4/q, B4/q/r, B4/8.., B4/32', { stem: 'up' }));
+            .concat(score.notes('B4/16, B4/16, B4/8, B4/8, B4/16, B4/16, B4/8.., B4/32', { stem: 'up' }));
 
         addMeasure(vf, score, 0, 0, 200, notes1)
             .addClef('percussion')
@@ -32,14 +32,6 @@ export function renderNotes(div, notes) {
 }
 
 function addMeasure(vf, score, x, y, width, notes) {
-    for (var n of notes) {
-        const type = n.getDuration();
-        const dots = n.getModifiersByType('Dot').length;
-        const ticks = n.getTicks();
-        const ticksFloat = n.getIntrinsicTicks();
-        console.log(type, dots, ticks, ticksFloat);
-    }
-
     const autoBeamed = VexFlow.Beam.generateBeams(notes, { maintainStemDirections: true });
     autoBeamed.forEach(beam => {
         const group = beam.getNotes();
