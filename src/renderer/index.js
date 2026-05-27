@@ -19,5 +19,4 @@ app.addEventListener('drop', async (e) => {
 });
 
 const score = document.getElementById('score');
-
 renderNotes(score, null);
