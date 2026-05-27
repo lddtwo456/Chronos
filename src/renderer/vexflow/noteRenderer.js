@@ -41,6 +41,8 @@ export function renderNotes(div, notes) {
                 { visible: false },
                 { visible: false },
             ]);
+        vf.Beam({ notes: note.slice(1, 3) });
+        vf.Beam({ notes: note.slice(7, 9) });
         vf.draw();
     });
 }
