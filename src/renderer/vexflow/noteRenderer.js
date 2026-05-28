@@ -35,7 +35,7 @@ export function renderGeneratedNotes(div, bars) {
     VexFlow.loadFonts('Bravura', 'Academico').then(() => {
         VexFlow.setFonts('Bravura', 'Academico');
 
-        const vf = new VexFlow.Factory({ renderer: { elementId: div.id, width: 800, height: 800 } });
+        const vf = new VexFlow.Factory({ renderer: { elementId: div.id, width: 1000, height: 800 } });
         const score = vf.EasyScore();
         score.set({ time: '4/4' });
 
@@ -60,18 +60,18 @@ export function renderGeneratedNotes(div, bars) {
 
             console.log(notes);
 
-            const measure = addMeasure(vf, score, barX, barY, 200, notes);
+            const measure = addMeasure(vf, score, barX, barY, 250, notes);
 
-            if (barX === 600) {
+            if (barX === 750) {
                 barX = 0;
-                barY += 150;
+                barY += 75;
             } else {
                 if (barX === 0) {
                     measure
                         .addClef('percussion')
                         .addTimeSignature('4/4');
                 }
-                barX += 200;
+                barX += 250;
             }
         }
 
