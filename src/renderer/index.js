@@ -32,7 +32,9 @@ barsSlider.addEventListener('input', (e) => {
 const generateButton = document.getElementById('generate');
 generateButton.addEventListener('click', (e) => {
     score.innerHTML = "";
-    const bars = Array.apply(null, Array(numBars)).map(() => generateBar().notes);
-    console.log(bars);
-    renderGeneratedNotes(score, bars);
+    const music = Music.generate(numBars);
+    console.log(music.bars);
+    console.log(music.beatStamps);
+    console.log(music.beatDistances);
+    renderGeneratedNotes(score, music.bars);
 })

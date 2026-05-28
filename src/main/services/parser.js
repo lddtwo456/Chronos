@@ -11,7 +11,7 @@ async function parseFile(filePath) {
     return {
         microsecondsPerBeat: microsecondsPerBeat,
         beatStamps: beatStamps,
-        noteDistances: getDurations(beatStamps),
+        beatDistances: getDurations(beatStamps),
     };
 }
 

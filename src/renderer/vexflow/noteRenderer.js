@@ -93,7 +93,7 @@ function addMeasure(vf, score, x, y, width, notes) {
         .setConfigForLines([
             { visible: false },
             { visible: false },
-            { visible: true },
+            { visible: true  },
             { visible: false },
             { visible: false },
         ]);

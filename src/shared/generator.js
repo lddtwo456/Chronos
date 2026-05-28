@@ -17,7 +17,7 @@ class Note {
             case '8':
                 return 0.5;
             case 't':
-                return 0.333;
+                return 0.33333333;
             case '16':
                 return 0.25;
             default:
