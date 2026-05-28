@@ -1,4 +1,4 @@
-import { renderNotes } from './vexflow/noteRenderer.js';
+import { renderNotes, renderGeneratedNotes } from './vexflow/noteRenderer.js';
 import { Music } from '../shared/music.mjs';
 import { generateBar } from '../shared/generator.js';
 
@@ -20,5 +20,19 @@ app.addEventListener('drop', async (e) => {
 });
 
 const score = document.getElementById('score');
-renderNotes(score, null);
-console.log(generateBar());
+const barsSlider = document.getElementById('bars');
+const barsOutput = document.getElementById('num_bars');
+barsOutput.textContent = barsSlider.value;
+let numBars = parseInt(barsSlider.value);
+barsSlider.addEventListener('input', (e) => {
+    numBars = parseInt(event.target.value);
+    barsOutput.textContent = event.target.value;
+});
+
+const generateButton = document.getElementById('generate');
+generateButton.addEventListener('click', (e) => {
+    score.innerHTML = "";
+    const bars = Array.apply(null, Array(numBars)).map(() => generateBar().notes);
+    console.log(bars);
+    renderGeneratedNotes(score, bars);
+})
