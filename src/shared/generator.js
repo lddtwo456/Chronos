@@ -1,5 +1,3 @@
-let templateRhythms = [];
-
 class Note {
     constructor(duration, isRest = false) {
         this.duration = duration;
@@ -59,8 +57,10 @@ class Bar {
     }
 }
 
+let templateRhythms = [];
+
 function addTemplateRhythm(notes,isRests,weight=1) {
-    noteObjs = [];
+    let noteObjs = [];
     for (let i = 0; i < notes.length; i++) {
         let note = notes[i];
         let isRest = isRests[i];
@@ -72,34 +72,32 @@ function addTemplateRhythm(notes,isRests,weight=1) {
     templateRhythms.push(new TemplateRhythm(noteObjs, weight));
 }
 
-function initializeTemplateRhythms() {
-    addTemplateRhythm(['w'], [false],0.2);
-    addTemplateRhythm(['h.'], [false],0.2);
-    addTemplateRhythm(['h'], [false],0.4);
-    addTemplateRhythm(['q'], [false]);
-    addTemplateRhythm(['w'], [true],0.1);
-    addTemplateRhythm(['h.'], [true],0.1);
-    addTemplateRhythm(['h'], [true],0.2);
-    addTemplateRhythm(['q'], [true],0.5);
+addTemplateRhythm(['w'], [false],0.2);
+addTemplateRhythm(['h.'], [false],0.2);
+addTemplateRhythm(['h'], [false],0.4);
+addTemplateRhythm(['q'], [false]);
+addTemplateRhythm(['w'], [true],0.1);
+addTemplateRhythm(['h.'], [true],0.1);
+addTemplateRhythm(['h'], [true],0.2);
+addTemplateRhythm(['q'], [true],0.5);
 
-    addTemplateRhythm(['8','q','8'], [false, false, false],0.25);
-    addTemplateRhythm(['8','8'], [false, false],0.25);
-    addTemplateRhythm(['8','8'], [true, false],0.25);
-    addTemplateRhythm(['8','8'], [false, true],0.25);
+addTemplateRhythm(['8','q','8'], [false, false, false],0.25);
+addTemplateRhythm(['8','8'], [false, false],0.25);
+addTemplateRhythm(['8','8'], [true, false],0.25);
+addTemplateRhythm(['8','8'], [false, true],0.25);
 
-    addTemplateRhythm(['t','t','t'], [false, false, false],0.1);
-    addTemplateRhythm(['t','t','t'], [false, true, false],0.1);
-    addTemplateRhythm(['t','t','t'], [false, false, true],0.1);
-    addTemplateRhythm(['t','t','t'], [true, false, false],0.1);
-    addTemplateRhythm(['t','t','t'], [true, false, true],0.1);
-    addTemplateRhythm(['t','t','t'], [true, true, false],0.1);
+addTemplateRhythm(['t','t','t'], [false, false, false],0.1);
+addTemplateRhythm(['t','t','t'], [false, true, false],0.1);
+addTemplateRhythm(['t','t','t'], [false, false, true],0.1);
+addTemplateRhythm(['t','t','t'], [true, false, false],0.1);
+addTemplateRhythm(['t','t','t'], [true, false, true],0.1);
+addTemplateRhythm(['t','t','t'], [true, true, false],0.1);
 
-    addTemplateRhythm(['16','8','16'], [false, false, false],0.2);
-    addTemplateRhythm(['16','16','8'], [false, false, false],0.2);
-    addTemplateRhythm(['8','16','16'], [false, false, false],0.2);
-}
+addTemplateRhythm(['16','8','16'], [false, false, false],0.2);
+addTemplateRhythm(['16','16','8'], [false, false, false],0.2);
+addTemplateRhythm(['8','16','16'], [false, false, false],0.2);
 
-function generateBar(numBeats = 4) {
+export function generateBar(numBeats = 4) {
     let bar = [];
     let remainingDuration = numBeats;
     while (remainingDuration > 0) {
@@ -107,11 +105,11 @@ function generateBar(numBeats = 4) {
         if (remainingTemplates.length === 0) {
             break;
         }
-        totalWeight = 0;
+        let totalWeight = 0;
         for (let template of remainingTemplates) {
             totalWeight += template.weight;
         }
-        cutoff = Math.random() * totalWeight;
+        let cutoff = Math.random() * totalWeight;
         let cumulativeWeight = 0;
         for (let template of remainingTemplates) {
             cumulativeWeight += template.weight;
@@ -126,6 +124,3 @@ function generateBar(numBeats = 4) {
     }
     return new Bar(bar);
 }
-
-initializeTemplateRhythms();
-console.log(generateBar(4));

@@ -1,5 +1,6 @@
 import { renderNotes } from './vexflow/noteRenderer.js';
 import { Music } from '../shared/music.mjs';
+import { generateBar } from '../shared/generator.js';
 
 const app = document.getElementById('app');
 
@@ -20,3 +21,4 @@ app.addEventListener('drop', async (e) => {
 
 const score = document.getElementById('score');
 renderNotes(score, null);
+console.log(generateBar());
