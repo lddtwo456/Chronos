@@ -2,16 +2,15 @@ import { renderNotes } from './vexflow/noteRenderer.js';
 import { Music } from '../shared/music.mjs';
 import { generateBar } from '../shared/generator.js';
 
-const app = document.getElementById('app');
 const score = document.getElementById('score');
 let music = null;
 
-app.addEventListener('dragover', (e) => {
+window.addEventListener('dragover', (e) => {
     e.preventDefault();
     e.stopPropagation();
 });
 
-app.addEventListener('drop', async (e) => {
+window.addEventListener('drop', async (e) => {
     e.preventDefault();
     e.stopPropagation();
 
