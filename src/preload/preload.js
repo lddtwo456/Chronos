@@ -6,5 +6,8 @@ contextBridge.exposeInMainWorld('api', {
     },
     getFileName (file) {
         return webUtils.getPathForFile(file);
+    },
+    getPressed () {
+        return ipcRenderer.invoke('get-pressed');
     }
 }); 

@@ -38,3 +38,9 @@ generateButton.addEventListener('click', (e) => {
     music = Music.generate(numBars);
     renderNotes(score, music.bars);
 })
+
+setInterval(async () => {
+    if (await window.api.getPressed()) {
+        console.log('pressed');
+    }
+}, 1);

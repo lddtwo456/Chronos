@@ -21,6 +21,7 @@
   "devDependencies": {
     "electron": "^42.2.0",
     "midi-parser-js": "^4.0.4",
+    "uiohook-napi": "^1.5.5",
     "vexflow": "^5.0.0"
   }
 }

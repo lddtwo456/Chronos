@@ -85,4 +85,4 @@ function getDurations(timestamps) {
     return durations;
 }
 
-module.exports = { parseFile };
+module.exports = parseFile;

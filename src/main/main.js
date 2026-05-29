@@ -1,6 +1,7 @@
 const { app, BrowserWindow, ipcMain } = require('electron');
 const path = require('node:path');
-const { parseFile } = require('./services/parser.js');
+const parseFile = require('./services/parser.js');
+const getPressed = require('./services/inputsHandler.js');
 
 const createWindow = () => {
     const win = new BrowserWindow({
@@ -26,4 +27,8 @@ app.on('window-all-closed', () => {
 
 ipcMain.handle('parse-file', (e, fileName) => {
     return parseFile(fileName);
+});
+
+ipcMain.handle('get-pressed', (e) => {
+    return getPressed();
 });
