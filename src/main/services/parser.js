@@ -10,6 +10,8 @@ async function parseFile(filePath) {
 
     return {
         microsecondsPerBeat: microsecondsPerBeat,
+        ticksPerBeat: midiArray.timeDivision,
+        tickStamps: getNoteEvents(midiArray.track[1]),
         beatStamps: beatStamps,
         beatDistances: getDurations(beatStamps),
     };
@@ -27,6 +29,30 @@ function findMicrosecondsPerBeat(midiArray) {
     return 500000;
 }
 
+// Finds tick positions of noteon and noteoff events to use for turning midi data into sheet music
+function getNoteEvents(midiTrack) {
+    let dt = 0;
+    let note = null; // Note to "listen" for
+    let ticks = [];
+
+    for (event of midiTrack.event) {
+        dt += event.deltaTime;
+
+        if (event.type === 9 || event.type === 8) {
+            if (note === null) {
+                note = event.data[0];
+            }
+
+            if (event.data[0] === note) {
+                ticks.push(dt);
+            }
+        }
+    }
+
+    return ticks;
+}
+
+// Finds beat positions of noteon events
 function getBeatStamps(midiTrack, ticksPerBeat) {
     let dt = 0;
     let note = null; // Note to "listen" for

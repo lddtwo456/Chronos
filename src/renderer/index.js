@@ -1,8 +1,9 @@
-import { renderNotes, renderGeneratedNotes } from './vexflow/noteRenderer.js';
+import { renderNotes } from './vexflow/noteRenderer.js';
 import { Music } from '../shared/music.mjs';
 import { generateBar } from '../shared/generator.js';
 
 const app = document.getElementById('app');
+const score = document.getElementById('score');
 
 app.addEventListener('dragover', (e) => {
     e.preventDefault();
@@ -16,10 +17,11 @@ app.addEventListener('drop', async (e) => {
     const files = e.dataTransfer.files;    
     const fileName = await window.api.getFileName(files[0]);
     const music = await Music.fromMidiFile(fileName);
-    console.log(music.defaultBPM, music.beatStamps, music.beatDistances);
+
+    score.innerHTML = "";
+    renderNotes(score, music.bars);
 });
 
-const score = document.getElementById('score');
 const barsSlider = document.getElementById('bars');
 const barsOutput = document.getElementById('num_bars');
 barsOutput.textContent = barsSlider.value;
@@ -33,8 +35,5 @@ const generateButton = document.getElementById('generate');
 generateButton.addEventListener('click', (e) => {
     score.innerHTML = "";
     const music = Music.generate(numBars);
-    console.log(music.bars);
-    console.log(music.beatStamps);
-    console.log(music.beatDistances);
-    renderGeneratedNotes(score, music.bars);
+    renderNotes(score, music.bars);
 })
