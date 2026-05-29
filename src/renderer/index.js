@@ -4,6 +4,7 @@ import { generateBar } from '../shared/generator.js';
 
 const app = document.getElementById('app');
 const score = document.getElementById('score');
+let music = null;
 
 app.addEventListener('dragover', (e) => {
     e.preventDefault();
@@ -16,7 +17,8 @@ app.addEventListener('drop', async (e) => {
 
     const files = e.dataTransfer.files;    
     const fileName = await window.api.getFileName(files[0]);
-    const music = await Music.fromMidiFile(fileName);
+    
+    music = await Music.fromMidiFile(fileName);
 
     score.innerHTML = "";
     renderNotes(score, music.bars);
@@ -34,6 +36,6 @@ barsSlider.addEventListener('input', (e) => {
 const generateButton = document.getElementById('generate');
 generateButton.addEventListener('click', (e) => {
     score.innerHTML = "";
-    const music = Music.generate(numBars);
+    music = Music.generate(numBars);
     renderNotes(score, music.bars);
 })
