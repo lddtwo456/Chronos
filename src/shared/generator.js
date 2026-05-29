@@ -99,11 +99,26 @@ function initializeTemplateRhythms() {
     addTemplateRhythm(['8','16','16'], [false, false, false],0.2);
 }
 
-function generateBar(numBeats = 4) {
+function generateBar(numBeats = 4, difficulty = 3) {
     let bar = [];
     let remainingDuration = numBeats;
     while (remainingDuration > 0) {
-        let remainingTemplates = templateRhythms.filter(template => template.duration <= remainingDuration);
+        // create copy of template rhythms so we can filter it without affecting the original
+        // Select first x elements by difficulty
+        let maxIndex = templateRhythms.length;
+        switch (difficulty) {
+            case 1:
+                maxIndex = 8; // first 8 elements
+                break;
+            case 2:
+                maxIndex = 12
+                break;
+            default:
+                maxIndex = templateRhythms.length
+                break;
+        }
+        let filteredTemplates = templateRhythms.slice(0, maxIndex);
+        let remainingTemplates = filteredTemplates.filter(template => template.duration <= remainingDuration);
         if (remainingTemplates.length === 0) {
             break;
         }
@@ -128,4 +143,4 @@ function generateBar(numBeats = 4) {
 }
 
 initializeTemplateRhythms();
-console.log(generateBar(4));
+console.log(generateBar(4, 1));
