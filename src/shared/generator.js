@@ -77,7 +77,6 @@ addTemplateRhythm(['h.'], [false],0.2);
 addTemplateRhythm(['h'], [false],0.4);
 addTemplateRhythm(['q'], [false]);
 addTemplateRhythm(['w'], [true],0.1);
-addTemplateRhythm(['h.'], [true],0.1);
 addTemplateRhythm(['h'], [true],0.2);
 addTemplateRhythm(['q'], [true],0.5);
 

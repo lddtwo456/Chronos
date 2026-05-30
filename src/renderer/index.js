@@ -1,6 +1,7 @@
 import { renderNotes } from './vexflow/noteRenderer.js';
 import { Music } from '../shared/music.mjs';
 import { generateBar } from '../shared/generator.js';
+import { perform } from './grader.js';
 
 const score = document.getElementById('score');
 let music = null;
@@ -37,10 +38,5 @@ generateButton.addEventListener('click', (e) => {
     score.innerHTML = "";
     music = Music.generate(numBars);
     renderNotes(score, music.bars);
+    perform(music, 120).then((r) => console.log(r));
 })
-
-setInterval(async () => {
-    if (await window.api.getPressed()) {
-        console.log('pressed');
-    }
-}, 1);
