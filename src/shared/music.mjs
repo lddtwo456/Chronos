@@ -136,12 +136,12 @@ class Music {
     }
 
     getTimestamps(bpm) {
-        const beatDuration = 1/(bpm*60);
+        const beatDuration = 1/bpm*60;
         return this.beatStamps.map(beat => beat*beatDuration);
     }
 
     getDurations(bpm) {
-        const beatDuration = 1/(bpm*60);
+        const beatDuration = 1/bpm*60;
         return this.beatDistances.map(distance => distance*beatDuration);
     }
 }

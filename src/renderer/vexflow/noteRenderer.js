@@ -2,7 +2,7 @@ export function renderNotes(div, bars) {
     VexFlow.loadFonts('Bravura', 'Academico').then(() => {
         VexFlow.setFonts('Bravura', 'Academico');
 
-        const vf = new VexFlow.Factory({ renderer: { elementId: div.id, width: 1000, height: 800 } });
+        const vf = new VexFlow.Factory({ renderer: { elementId: div.id, width: 1000, height: 250 } });
         const score = vf.EasyScore();
         score.set({ time: '4/4' });
 
