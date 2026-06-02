@@ -2,6 +2,7 @@ import { renderNotes } from './vexflow/noteRenderer.js';
 import { Music } from '../shared/music.mjs';
 import { generateBar } from '../shared/generator.js';
 import { perform } from './player.js';
+import { drawGraph } from './grapher.js';
 
 const score = document.getElementById('score');
 let music = null;
@@ -36,9 +37,9 @@ barsSlider.addEventListener('input', (e) => {
 const bpmSlider = document.getElementById('bpm');
 const bpmOutput = document.getElementById('selected_bpm');
 bpmOutput.textContent = bpmSlider.value;
-let selectedBpm = parseInt(bpmSlider.value);
+let selectedBPM = parseInt(bpmSlider.value);
 bpmSlider.addEventListener('input', (e) => {
-    selectedBpm = parseInt(e.target.value);
+    selectedBPM = parseInt(e.target.value);
     bpmOutput.textContent = e.target.value;
 });
 
@@ -50,7 +51,11 @@ generateButton.addEventListener('click', async (e) => {
     renderNotes(score, selectedMusic.bars);
 })
 
+const canvas = document.getElementById('graph');
 const playButton = document.getElementById('play');
 playButton.addEventListener('click', () => {
-    perform(selectedMusic, selectedBpm).then((r) => console.log(r));
+    perform(selectedMusic, selectedBPM).then((r) => {
+        console.log(r);
+        drawGraph(canvas, selectedMusic, r, selectedBPM);
+    });
 })
