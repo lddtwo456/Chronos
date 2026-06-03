@@ -1,23 +1,30 @@
 const { uIOhook } = require('uiohook-napi');
 
-let held = false;
-let previouslyHeld = false;
+let keys = {};
+let previousKeys = {};
 
 uIOhook.on('keydown', (e) => {
-    held = true;
+    keys[e.keycode] = true;
     console.log('down', e.keycode);
 });
 
 uIOhook.on('keyup', (e) => {
-    held = false;
+    keys[e.keycode] = false;
     console.log('up', e.keycode);
 });
 
 uIOhook.start();
 
 function getPressed() {
-    const pressed = held && !previouslyHeld;
-    previouslyHeld = held;
+    let pressed = false;
+    for (const key of Object.keys(keys)) {
+        console.log(key, keys[key], previousKeys[key]);
+        if (keys[key] && !previousKeys[key]) {
+            pressed = true;
+        }
+    }
+    previousKeys = structuredClone(keys);
+
     return pressed;
 }
 
